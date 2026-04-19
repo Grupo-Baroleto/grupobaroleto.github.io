@@ -3,167 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grupo Baroleto | Gestão e Participações</title>
+    <title>Grupo Baroleto | Legado e Excelência</title>
     
-    <!-- SEO & Meta Tags -->
-    <meta name="description" content="Grupo Baroleto - Liderança e inovação na gestão de marcas e participações empresariais.">
-    <meta property="og:title" content="Grupo Baroleto">
-    <meta property="og:description" content="Excelência em gestão e expansão de negócios.">
-    <meta property="og:type" content="website">
-    <link rel="icon" href="img/favicon.png" type="image/png">
+    <!-- Metadados de SEO -->
+    <meta name="description" content="Grupo Baroleto - Honrando o tempo, cultivando raízes e construindo marcas eternas.">
+    
+    <!-- Google Fonts: Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome (Ícones) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'baro-black': '#0D0D0D',
+                        'baro-white': '#FFFFFF',
+                        'baro-earth': '#3B2618',
+                        'baro-wood': '#6A4A2B',
+                        'baro-sand': '#E8DED2',
+                        'baro-dust': '#B8AEA7',
+                        'baro-olive': '#6F6B3E',
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .brand-card:hover { transform: translateY(-5px); transition: all 0.3s ease; }
+        .parallax { background-attachment: fixed; background-position: center; background-size: cover; }
+        .glow-hover:hover { box-shadow: 0 0 20px rgba(111, 107, 62, 0.2); }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900">
+<body class="bg-baro-sand text-baro-black font-sans">
 
-    <!-- Navbar -->
-    <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20 items-center">
-                <div class="flex-shrink-0 flex items-center">
-                    <span class="text-2xl font-bold tracking-tighter text-blue-900">GRUPO <span class="text-blue-600">BAROLETO</span></span>
+    <!-- Header / Nav -->
+    <nav class="fixed w-full z-50 bg-baro-black/90 backdrop-blur-md text-baro-sand border-b border-baro-wood/30">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between h-24 items-center">
+                <div class="flex flex-col">
+                    <span class="text-2xl font-bold tracking-[0.2em] uppercase">Baroleto</span>
+                    <span class="text-[10px] tracking-[0.4em] uppercase text-baro-dust italic">Desde sempre, para sempre</span>
                 </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="#home" class="hover:text-blue-600 px-3 py-2 font-medium">Home</a>
-                        <a href="#sobre" class="hover:text-blue-600 px-3 py-2 font-medium">Sobre</a>
-                        <a href="#marcas" class="hover:text-blue-600 px-3 py-2 font-medium">Nossas Marcas</a>
-                        <a href="#contato" class="bg-blue-600 text-white px-5 py-2 rounded-full font-medium hover:bg-blue-700 transition">Contato</a>
-                    </div>
-                </div>
-                <!-- Mobile Menu Button -->
-                <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-gray-600 focus:outline-none">
-                        <i class="fa-solid fa-bars text-2xl"></i>
-                    </button>
+                <div class="hidden md:flex space-x-10 text-xs font-semibold uppercase tracking-widest">
+                    <a href="#manifesto" class="hover:text-baro-white transition">O Manifesto</a>
+                    <a href="#marcas" class="hover:text-baro-white transition">Nossas Marcas</a>
+                    <a href="#contato" class="hover:text-baro-white transition">Contato</a>
                 </div>
             </div>
-        </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
-            <a href="#home" class="block px-4 py-2 hover:bg-gray-100">Home</a>
-            <a href="#sobre" class="block px-4 py-2 hover:bg-gray-100">Sobre</a>
-            <a href="#marcas" class="block px-4 py-2 hover:bg-gray-100">Nossas Marcas</a>
-            <a href="#contato" class="block px-4 py-2 hover:bg-gray-100">Contato</a>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="pt-32 pb-20 md:pt-48 md:pb-32 bg-gradient-to-br from-blue-900 to-indigo-950 text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight">Impulsionando marcas,<br><span class="text-blue-400">construindo o futuro.</span></h1>
-            <p class="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto">O Grupo Baroleto é uma holding focada em excelência operacional e crescimento estratégico de marcas líderes.</p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#marcas" class="bg-white text-blue-900 px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition shadow-lg">Conhecer Marcas</a>
-                <a href="#contato" class="border border-white/30 backdrop-blur-sm px-8 py-3 rounded-full font-bold hover:bg-white/10 transition">Fale Conosco</a>
-            </div>
+    <!-- Hero Section (O Manifesto) -->
+    <section id="manifesto" class="relative min-h-screen flex items-center justify-center pt-24 overflow-hidden bg-baro-black text-baro-sand">
+        <div class="absolute inset-0 opacity-40">
+            <!-- Imagem que remete a textura de couro ou solo do cerrado -->
+            <img src="https://images.unsplash.com/photo-1590736704728-f4730bb3c370?q=80&w=2000" class="w-full h-full object-cover grayscale" alt="Textura">
         </div>
-    </section>
-
-    <!-- Sobre Section -->
-    <section id="sobre" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div>
-                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Sobre o Grupo</h2>
-                    <p class="text-gray-600 mb-4 leading-relaxed">Com uma trajetória marcada pela inovação e solidez, o Grupo Baroleto atua na gestão de negócios em diversos segmentos, sempre priorizando a qualidade e a satisfação do cliente final.</p>
-                    <p class="text-gray-600 mb-6 leading-relaxed">Nossa missão é transformar potencial em performance, provendo suporte estratégico para que nossas marcas alcancem o topo de seus mercados.</p>
-                    <div class="grid grid-cols-2 gap-6">
-                        <div>
-                            <span class="block text-3xl font-bold text-blue-600">10+</span>
-                            <span class="text-sm text-gray-500 uppercase tracking-wider font-semibold">Anos de Experiência</span>
-                        </div>
-                        <div>
-                            <span class="block text-3xl font-bold text-blue-600">100%</span>
-                            <span class="text-sm text-gray-500 uppercase tracking-wider font-semibold">Compromisso</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-gray-200 h-64 md:h-96 rounded-2xl overflow-hidden shadow-xl">
-                    <!-- Placeholder para imagem corporativa -->
-                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80" alt="Escritório" class="w-full h-full object-cover">
-                </div>
-            </div>
+        <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-baro-dust uppercase tracking-[0.5em] text-sm mb-8">Manifesto Baroleto</h2>
+            <h1 class="text-4xl md:text-6xl font-light leading-tight mb-8 italic">
+                "O tempo não é nosso inimigo, é o nosso <span class="font-bold text-baro-white">mestre</span>."
+            </h1>
+            <p class="text-lg md:text-xl text-baro-dust font-light leading-relaxed mb-12 italic">
+                Honramos o que é feito à mão, o que vem da terra e o que resiste ao passar dos anos. No coração do Cerrado, forjamos legados através da gestão de marcas que compartilham um único DNA: a busca pelo eterno.
+            </p>
+            <div class="w-px h-24 bg-baro-wood mx-auto"></div>
         </div>
     </section>
 
     <!-- Marcas Section -->
-    <section id="marcas" class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl font-bold mb-12">Nossas Marcas</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Marca 1 -->
-                <div class="brand-card bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center">
-                    <img src="img/baroleto-logo.png" alt="Baroleto" class="h-16 mb-6 grayscale hover:grayscale-0 transition duration-500" onerror="this.src='https://via.placeholder.com/150?text=Logo+Baroleto'">
-                    <h3 class="font-bold text-xl mb-2">Baroleto</h3>
-                    <p class="text-gray-500 text-sm">Referência em qualidade e inovação no setor.</p>
+    <section id="marcas" class="py-24 bg-baro-white">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <span class="text-baro-olive font-bold tracking-widest text-xs uppercase">Ecosistema</span>
+            <h2 class="text-3xl font-bold text-baro-earth mt-2 mb-16 tracking-tight">Marcas que contam histórias</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Marca 1: Baroleto -->
+                <div class="group bg-baro-sand p-12 rounded-sm border border-baro-dust/20 hover:border-baro-wood transition-all duration-500 glow-hover">
+                    <div class="h-24 flex items-center justify-center mb-8">
+                        <!-- Substituir pelo logo real -->
+                        <img src="img/baroleto-logo.png" alt="Baroleto" class="max-h-full grayscale group-hover:grayscale-0 transition duration-500" onerror="this.src='https://via.placeholder.com/200x80/3B2618/E8DED2?text=BAROLETO'">
+                    </div>
+                    <h3 class="text-xl font-bold text-baro-earth uppercase tracking-widest mb-4">Baroleto</h3>
+                    <p class="text-baro-wood/80 font-light italic">A essência da matéria-prima transformada em arte e durabilidade.</p>
                 </div>
-                <!-- Marca 2 (Muzzu) -->
-                <div class="brand-card bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center">
-                    <img src="img/muzzu-logo.png" alt="Muzzu" class="h-16 mb-6 grayscale hover:grayscale-0 transition duration-500" onerror="this.src='https://via.placeholder.com/150?text=Logo+Muzzu'">
-                    <h3 class="font-bold text-xl mb-2">Muzzu</h3>
-                    <p class="text-gray-500 text-sm">Elegância e estilo para o seu dia a dia.</p>
+
+                <!-- Marca 2: Muzzu -->
+                <div class="group bg-baro-sand p-12 rounded-sm border border-baro-dust/20 hover:border-baro-wood transition-all duration-500 glow-hover">
+                    <div class="h-24 flex items-center justify-center mb-8">
+                        <img src="img/muzzu-logo.png" alt="Muzzu" class="max-h-full grayscale group-hover:grayscale-0 transition duration-500" onerror="this.src='https://via.placeholder.com/200x80/3B2618/E8DED2?text=MUZZU'">
+                    </div>
+                    <h3 class="text-xl font-bold text-baro-earth uppercase tracking-widest mb-4">Muzzu</h3>
+                    <p class="text-baro-wood/80 font-light italic">Onde o design contemporâneo encontra as raízes do artesanal.</p>
                 </div>
-                <!-- Adicione mais marcas conforme necessário -->
             </div>
         </div>
     </section>
 
-    <!-- Contato Section -->
-    <section id="contato" class="py-20 bg-white">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl font-bold mb-8">Fale Conosco</h2>
-            <div class="bg-gray-50 p-8 rounded-3xl border border-gray-200">
-                <form action="https://formspree.io/f/SEU_ID_AQUI" method="POST" class="grid grid-cols-1 gap-4">
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <input type="text" name="name" placeholder="Nome completo" required class="w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none">
-                        <input type="email" name="email" placeholder="E-mail" required class="w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none">
-                    </div>
-                    <textarea name="message" placeholder="Como podemos ajudar?" rows="4" required class="w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none"></textarea>
-                    <button type="submit" class="bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition">Enviar Mensagem</button>
-                </form>
-            </div>
-            <div class="mt-12 flex justify-center space-x-8 text-2xl text-gray-400">
-                <a href="#" class="hover:text-blue-600"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#" class="hover:text-blue-600"><i class="fa-brands fa-linkedin"></i></a>
-                <a href="https://wa.me/SEUNUMERO" class="hover:text-green-500"><i class="fa-brands fa-whatsapp"></i></a>
-            </div>
+    <!-- Call to Action / Contato -->
+    <section id="contato" class="py-24 bg-baro-earth text-baro-sand">
+        <div class="max-w-3xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-light mb-8">Deseja conhecer nossas <span class="font-bold">raízes?</span></h2>
+            <p class="text-baro-dust mb-12 font-light italic">Estamos abertos a conexões que valorizam o tempo e a qualidade acima da pressa.</p>
+            
+            <form action="#" class="space-y-6 text-left">
+                <div class="border-b border-baro-wood">
+                    <input type="text" placeholder="Seu nome" class="w-full bg-transparent py-3 outline-none placeholder:text-baro-wood text-baro-white uppercase text-xs tracking-widest">
+                </div>
+                <div class="border-b border-baro-wood">
+                    <input type="email" placeholder="E-mail profissional" class="w-full bg-transparent py-3 outline-none placeholder:text-baro-wood text-baro-white uppercase text-xs tracking-widest">
+                </div>
+                <button class="w-full bg-baro-olive hover:bg-baro-wood text-baro-sand font-bold py-4 mt-8 transition-colors uppercase text-xs tracking-[0.3em]">
+                    Enviar Mensagem
+                </button>
+            </form>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-lg font-bold mb-4">GRUPO BAROLETO</p>
-            <p class="text-gray-500 text-sm">© <script>document.write(new Date().getFullYear())</script> Todos os direitos reservados.</p>
-            <p class="text-gray-600 text-xs mt-2 italic">Excelência em Gestão e Participações.</p>
+    <footer class="py-12 bg-baro-black text-baro-dust border-t border-baro-earth">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0">
+                <span class="text-lg font-bold tracking-widest uppercase">Grupo Baroleto</span>
+                <p class="text-[10px] mt-2 italic">© <script>document.write(new Date().getFullYear())</script> - Cultivando Legados.</p>
+            </div>
+            <div class="flex space-x-6 text-xl">
+                <a href="#" class="hover:text-baro-white"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="hover:text-baro-white"><i class="fa-brands fa-linkedin"></i></a>
+            </div>
         </div>
     </footer>
 
-    <script>
-        // Menu Mobile Toggle
-        const btn = document.getElementById('mobile-menu-button');
-        const menu = document.getElementById('mobile-menu');
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-        });
-        
-        // Fechar menu ao clicar em um link
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                menu.classList.add('hidden');
-            });
-        });
-    </script>
+    <!-- FontAwesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </body>
 </html>
