@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grupo Baroleto | Legado e Excelência</title>
+    <title>Grupo Baroleto | Legado de Família</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="img/favicon.png">
     
     <!-- Metadados de SEO -->
-    <meta name="description" content="Grupo Baroleto - Honrando o tempo, cultivando raízes e construindo marcas eternas.">
+    <meta name="description" content="Grupo Baroleto - Um grupo familiar dedicado à gestão de excelência em alimentos e automação de alta performance.">
     
     <!-- Google Fonts: Montserrat -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -35,110 +38,102 @@
             }
         }
     </script>
-    <style>
-        .parallax { background-attachment: fixed; background-position: center; background-size: cover; }
-        .glow-hover:hover { box-shadow: 0 0 20px rgba(111, 107, 62, 0.2); }
-    </style>
 </head>
-<body class="bg-baro-sand text-baro-black font-sans">
+<body class="bg-baro-sand text-baro-black font-sans leading-relaxed">
 
     <!-- Header / Nav -->
-    <nav class="fixed w-full z-50 bg-baro-black/90 backdrop-blur-md text-baro-sand border-b border-baro-wood/30">
+    <nav class="fixed w-full z-50 bg-baro-black/95 backdrop-blur-md text-baro-sand border-b border-baro-wood/20">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="flex justify-between h-24 items-center">
-                <div class="flex flex-col">
-                    <span class="text-2xl font-bold tracking-[0.2em] uppercase">Baroleto</span>
-                    <span class="text-[10px] tracking-[0.4em] uppercase text-baro-dust italic">Desde sempre, para sempre</span>
+            <div class="flex justify-between h-20 items-center">
+                <!-- Logo e Nome -->
+                <div class="flex items-center space-x-4">
+                    <img src="img/logo.png" alt="Logo Baroleto" class="h-12 w-auto" onerror="this.style.display='none'">
+                    <div class="flex flex-col">
+                        <span class="text-xl font-bold tracking-[0.2em] uppercase leading-none">Baroleto</span>
+                        <span class="text-[9px] tracking-[0.3em] uppercase text-baro-dust">Grupo Familiar</span>
+                    </div>
                 </div>
-                <div class="hidden md:flex space-x-10 text-xs font-semibold uppercase tracking-widest">
+                <!-- Menu -->
+                <div class="hidden md:flex space-x-10 text-[10px] font-bold uppercase tracking-[0.2em]">
                     <a href="#manifesto" class="hover:text-baro-white transition">O Manifesto</a>
-                    <a href="#marcas" class="hover:text-baro-white transition">Nossas Marcas</a>
-                    <a href="#contato" class="hover:text-baro-white transition">Contato</a>
+                    <a href="#marcas" class="hover:text-baro-white transition">Nossas Empresas</a>
+                    <a href="#contato" class="hover:text-baro-white transition border border-baro-wood px-4 py-2 hover:bg-baro-wood">Contato</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section (O Manifesto) -->
-    <section id="manifesto" class="relative min-h-screen flex items-center justify-center pt-24 overflow-hidden bg-baro-black text-baro-sand">
-        <div class="absolute inset-0 opacity-40">
-            <!-- Imagem que remete a textura de couro ou solo do cerrado -->
-            <img src="https://images.unsplash.com/photo-1590736704728-f4730bb3c370?q=80&w=2000" class="w-full h-full object-cover grayscale" alt="Textura">
+    <!-- Hero Section (Manifesto) -->
+    <section id="manifesto" class="relative min-h-screen flex items-center justify-center pt-20 bg-baro-black text-baro-sand overflow-hidden">
+        <div class="absolute inset-0 opacity-30">
+            <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2000" class="w-full h-full object-cover" alt="Cerrado">
         </div>
         <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
-            <h2 class="text-baro-dust uppercase tracking-[0.5em] text-sm mb-8">Manifesto Baroleto</h2>
-            <h1 class="text-4xl md:text-6xl font-light leading-tight mb-8 italic">
-                "O tempo não é nosso inimigo, é o nosso <span class="font-bold text-baro-white">mestre</span>."
+            <h2 class="text-baro-olive font-semibold uppercase tracking-[0.4em] text-xs mb-6 italic">Inspirado pelo Cerrado</h2>
+            <h1 class="text-3xl md:text-5xl font-light leading-tight mb-10 italic">
+                "Não buscamos o efêmero. Cultivamos negócios que <span class="font-bold text-baro-white">honram o tempo</span> e as raízes da nossa família."
             </h1>
-            <p class="text-lg md:text-xl text-baro-dust font-light leading-relaxed mb-12 italic">
-                Honramos o que é feito à mão, o que vem da terra e o que resiste ao passar dos anos. No coração do Cerrado, forjamos legados através da gestão de marcas que compartilham um único DNA: a busca pelo eterno.
+            <p class="text-base md:text-lg text-baro-dust font-light leading-relaxed max-w-2xl mx-auto italic">
+                O Grupo Baroleto é o guardião de um ecossistema próprio. Nossa gestão é dedicada exclusivamente às nossas operações, garantindo que cada detalhe reflita nosso compromisso com a perenidade e a excelência.
             </p>
-            <div class="w-px h-24 bg-baro-wood mx-auto"></div>
         </div>
     </section>
 
-    <!-- Marcas Section -->
+    <!-- Nossas Empresas Section -->
     <section id="marcas" class="py-24 bg-baro-white">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <span class="text-baro-olive font-bold tracking-widest text-xs uppercase">Ecosistema</span>
-            <h2 class="text-3xl font-bold text-baro-earth mt-2 mb-16 tracking-tight">Marcas que contam histórias</h2>
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20">
+                <span class="text-baro-olive font-bold tracking-widest text-[10px] uppercase">Foco e Especialidade</span>
+                <h2 class="text-4xl font-bold text-baro-earth mt-4 tracking-tight uppercase">Nosso Ecossistema</h2>
+                <div class="w-16 h-1 bg-baro-wood mx-auto mt-6"></div>
+            </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <!-- Marca 1: Baroleto -->
-                <div class="group bg-baro-sand p-12 rounded-sm border border-baro-dust/20 hover:border-baro-wood transition-all duration-500 glow-hover">
-                    <div class="h-24 flex items-center justify-center mb-8">
-                        <!-- Substituir pelo logo real -->
-                        <img src="img/baroleto-logo.png" alt="Baroleto" class="max-h-full grayscale group-hover:grayscale-0 transition duration-500" onerror="this.src='https://via.placeholder.com/200x80/3B2618/E8DED2?text=BAROLETO'">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+                <!-- Empresa 1: Alimentício -->
+                <div class="group">
+                    <div class="overflow-hidden bg-baro-sand mb-8 h-80 rounded-sm">
+                        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1000" alt="Alimentício" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700">
                     </div>
-                    <h3 class="text-xl font-bold text-baro-earth uppercase tracking-widest mb-4">Baroleto</h3>
-                    <p class="text-baro-wood/80 font-light italic">A essência da matéria-prima transformada em arte e durabilidade.</p>
+                    <h3 class="text-2xl font-bold text-baro-earth tracking-widest uppercase mb-4">Alimentício</h3>
+                    <p class="text-baro-wood/90 font-light italic leading-relaxed mb-6">
+                        Da terra ao paladar. Atuamos no setor alimentício com foco na pureza dos processos e na qualidade que só o cuidado familiar consegue imprimir. Transformamos ingredientes em experiências duradouras.
+                    </p>
                 </div>
 
-                <!-- Marca 2: Muzzu -->
-                <div class="group bg-baro-sand p-12 rounded-sm border border-baro-dust/20 hover:border-baro-wood transition-all duration-500 glow-hover">
-                    <div class="h-24 flex items-center justify-center mb-8">
-                        <img src="img/muzzu-logo.png" alt="Muzzu" class="max-h-full grayscale group-hover:grayscale-0 transition duration-500" onerror="this.src='https://via.placeholder.com/200x80/3B2618/E8DED2?text=MUZZU'">
+                <!-- Empresa 2: Automação -->
+                <div class="group">
+                    <div class="overflow-hidden bg-baro-sand mb-8 h-80 rounded-sm">
+                        <img src="https://images.unsplash.com/photo-1558002038-10379031948d?q=80&w=1000" alt="Automação" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700">
                     </div>
-                    <h3 class="text-xl font-bold text-baro-earth uppercase tracking-widest mb-4">Muzzu</h3>
-                    <p class="text-baro-wood/80 font-light italic">Onde o design contemporâneo encontra as raízes do artesanal.</p>
+                    <h3 class="text-2xl font-bold text-baro-earth tracking-widest uppercase mb-4">Automação Inteligente</h3>
+                    <p class="text-baro-wood/90 font-light italic leading-relaxed mb-6">
+                        Residencial, empresarial e rural. Integramos tecnologia de ponta para otimizar a vida e o trabalho. No Cerrado ou na cidade, nossa automação não é apenas técnica, é sobre prover tempo e segurança para o que realmente importa.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Call to Action / Contato -->
-    <section id="contato" class="py-24 bg-baro-earth text-baro-sand">
-        <div class="max-w-3xl mx-auto px-6 text-center">
-            <h2 class="text-3xl font-light mb-8">Deseja conhecer nossas <span class="font-bold">raízes?</span></h2>
-            <p class="text-baro-dust mb-12 font-light italic">Estamos abertos a conexões que valorizam o tempo e a qualidade acima da pressa.</p>
+    <!-- Contato / Rodapé -->
+    <section id="contato" class="py-24 bg-baro-black text-baro-sand">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <img src="img/logo.png" alt="Logo Baroleto" class="h-20 mx-auto mb-10 opacity-80" onerror="this.style.display='none'">
+            <h2 class="text-2xl font-light mb-4 uppercase tracking-[0.3em]">Grupo Baroleto</h2>
+            <p class="text-baro-dust text-sm italic mb-12">Fortalecendo raízes, automatizando o futuro.</p>
             
-            <form action="#" class="space-y-6 text-left">
-                <div class="border-b border-baro-wood">
-                    <input type="text" placeholder="Seu nome" class="w-full bg-transparent py-3 outline-none placeholder:text-baro-wood text-baro-white uppercase text-xs tracking-widest">
-                </div>
-                <div class="border-b border-baro-wood">
-                    <input type="email" placeholder="E-mail profissional" class="w-full bg-transparent py-3 outline-none placeholder:text-baro-wood text-baro-white uppercase text-xs tracking-widest">
-                </div>
-                <button class="w-full bg-baro-olive hover:bg-baro-wood text-baro-sand font-bold py-4 mt-8 transition-colors uppercase text-xs tracking-[0.3em]">
-                    Enviar Mensagem
-                </button>
-            </form>
+            <div class="flex justify-center space-x-12 mb-16 text-xs font-bold uppercase tracking-widest">
+                <a href="mailto:contato@grupobaroleto.com.br" class="hover:text-baro-white transition">E-mail</a>
+                <a href="#" class="hover:text-baro-white transition">LinkedIn</a>
+                <a href="#" class="hover:text-baro-white transition">Instagram</a>
+            </div>
+
+            <div class="pt-8 border-t border-baro-wood/30">
+                <p class="text-[10px] text-baro-dust/50 uppercase tracking-widest italic">
+                    © <script>document.write(new Date().getFullYear())</script> Grupo Baroleto. Todos os direitos reservados.
+                </p>
+            </div>
         </div>
     </section>
-
-    <!-- Footer -->
-    <footer class="py-12 bg-baro-black text-baro-dust border-t border-baro-earth">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
-            <div class="mb-6 md:mb-0">
-                <span class="text-lg font-bold tracking-widest uppercase">Grupo Baroleto</span>
-                <p class="text-[10px] mt-2 italic">© <script>document.write(new Date().getFullYear())</script> - Cultivando Legados.</p>
-            </div>
-            <div class="flex space-x-6 text-xl">
-                <a href="#" class="hover:text-baro-white"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#" class="hover:text-baro-white"><i class="fa-brands fa-linkedin"></i></a>
-            </div>
-        </div>
-    </footer>
 
     <!-- FontAwesome para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
