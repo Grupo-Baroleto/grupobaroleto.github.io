@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Controle de Internet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-slate-50 p-4 md:p-10">
+
+    <div class="max-w-5xl mx-auto">
+        <h1 class="text-2xl font-bold mb-8 text-slate-800 underline decoration-blue-500">Gerenciamento de Clientes</h1>
+
+        <!-- Form Cadastro -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border mb-8">
+            <form id="addClientForm" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <input type="text" id="name" placeholder="Nome do Cliente" required class="border p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
+                <select id="month" class="border p-3 rounded-xl bg-white uppercase text-xs font-bold">
+                    <option>Janeiro</option><option>Fevereiro</option><option>Março</option><option>Abril</option>
+                    <option>Maio</option><option>Junho</option><option>Julho</option><option>Agosto</option>
+                    <option>Setembro</option><option>Outubro</option><option>Novembro</option><option>Dezembro</option>
+                </select>
+                <select id="year" class="border p-3 rounded-xl bg-white font-bold">
+                    <option>2024</option><option>2025</option>
+                </select>
+                <button type="submit" class="bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition">CADASTRAR</button>
+            </form>
+        </div>
+
+        <!-- Lista de Clientes -->
+        <div class="bg-white rounded-2xl shadow-sm border overflow-hidden">
+            <table class="w-full text-left">
+                <thead class="bg-slate-50 text-slate-400 text-[10px] uppercase font-bold">
+                    <tr>
+                        <th class="p-4">Cliente</th>
+                        <th class="p-4">Referência</th>
+                        <th class="p-4 text-center">Link de Cobrança</th>
+                        <th class="p-4 text-right">Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- FIREBASE SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // COLE SUAS CONFIGURAÇÕES DO FIREBASE AQUI
+        const firebaseConfig = {
+            apiKey: "AIzaSyBGAmDeELLco_wONy9HirW8IdcG4-PcGPE",
+            authDomain: "baroleto-cobrancas.firebaseapp.com",
+            projectId: "baroleto-cobrancas",
+            storageBucket: "baroleto-cobrancas.firebasestorage.app",
+            messagingSenderId: "221414092860",
+            appId: "1:221414092860:web:145e50c77065241a3dd339",
+            measurementId: "G-MVT3N6NMV6"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const clientsCol = collection(db, "devedores");
+
+        // CADASTRO (Create)
+        document.getElementById('addClientForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const month = document.getElementById('month').value;
+            const year = document.getElementById('year').value;
+
+            await addDoc(clientsCol, { name, month, year, plan: "1Gb", price: "50.00" });
+            e.target.reset();
+        });
+
+        // LISTAGEM EM TEMPO REAL (Read)
+        onSnapshot(clientsCol, (snapshot) => {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = "";
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                const paymentLink = window.location.href.replace('admin.html', 'pagamento.html') + "?id=" + doc.id;
+                
+                tbody.innerHTML += `
+                    <tr class="border-t hover:bg-slate-50">
+                        <td class="p-4 font-bold text-slate-700">${data.name}</td>
+                        <td class="p-4 text-slate-500 text-sm">${data.month} / ${data.year}</td>
+                        <td class="p-4 text-center text-blue-600 truncate max-w-[200px]">
+                            <button onclick="copyLink('${paymentLink}')" class="bg-blue-50 px-3 py-1 rounded-full text-xs font-bold hover:bg-blue-100">
+                                <i class="fa-solid fa-copy mr-1"></i> COPIAR LINK
+                            </button>
+                        </td>
+                        <td class="p-4 text-right">
+                            <button onclick="deleteClient('${doc.id}')" class="text-red-400 hover:text-red-600"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+        });
+
+        // EXCLUSÃO (Delete)
+        window.deleteClient = async (id) => {
+            if(confirm("Deseja remover este cliente?")) {
+                await deleteDoc(doc(db, "devedores", id));
+            }
+        };
+
+        window.copyLink = (link) => {
+            navigator.clipboard.writeText(link);
+            alert("Link de cobrança copiado!");
+        };
+    </script>
+</body>
+</html>
