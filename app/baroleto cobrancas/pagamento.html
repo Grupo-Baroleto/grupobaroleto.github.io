@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento de Internet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-[#f4f7f6] flex items-center justify-center min-h-screen p-4">
+
+    <div class="max-w-md w-full bg-white rounded-[2rem] shadow-2xl overflow-hidden">
+        <!-- Header -->
+        <div class="bg-blue-600 p-8 text-white text-center">
+            <i class="fa-solid fa-wifi text-4xl mb-4 opacity-50"></i>
+            <h2 id="clientName" class="text-xl font-bold uppercase tracking-tight">Carregando...</h2>
+            <p id="refDate" class="text-blue-100 text-xs italic">Buscando informações da fatura...</p>
+        </div>
+
+        <div class="p-8">
+            <!-- Valor -->
+            <div class="flex justify-between items-center bg-slate-50 p-5 rounded-2xl mb-8 border border-slate-100">
+                <div>
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Valor da Mensalidade</p>
+                    <p class="text-3xl font-black text-blue-600">R$ 50,00</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-xs font-bold text-slate-600">Plano Fibra</p>
+                    <p class="text-xs text-blue-500 font-bold">1 Gbps</p>
+                </div>
+            </div>
+
+            <!-- Área PIX -->
+            <div class="text-center">
+                <p class="text-sm font-bold text-slate-700 mb-4 flex items-center justify-center">
+                    <i class="fa-brands fa-pix text-teal-500 mr-2 text-lg"></i> Pague com Pix
+                </p>
+                
+                <!-- Imagem do QR Code que você enviou -->
+                <div class="bg-white border-2 border-dashed border-slate-200 p-3 rounded-2xl inline-block mb-6">
+                    <img src="qrcode-pix.png" alt="QR Code Pix" class="w-48 h-48 mx-auto">
+                </div>
+
+                <div class="space-y-3">
+                    <button onclick="copyPix()" class="w-full bg-slate-900 text-white font-bold py-4 rounded-2xl hover:bg-black transition flex items-center justify-center gap-2 shadow-xl">
+                        <i class="fa-solid fa-copy text-teal-400"></i> COPIAR PIX COPIA E COLA
+                    </button>
+                    <p class="text-[10px] text-gray-400 uppercase font-bold tracking-tighter">
+                        Após o pagamento, o sinal é liberado automaticamente.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // MESMA CONFIGURAÇÃO DO ADMIN.HTML
+        const firebaseConfig = {
+            apiKey: "SUA_API_KEY",
+            authDomain: "SEU_PROJETO.firebaseapp.com",
+            projectId: "SEU_PROJETO_ID",
+            storageBucket: "SEU_PROJETO.appspot.com",
+            messagingSenderId: "ID_SENDER",
+            appId: "SEU_APP_ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Pegar ID da URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+
+        if (id) {
+            const docRef = doc(db, "devedores", id);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                document.getElementById('clientName').innerText = data.name;
+                document.getElementById('refDate').innerText = `Referência: ${data.month} de ${data.year}`;
+            } else {
+                document.body.innerHTML = "<div class='text-center font-bold'>Fatura não encontrada ou já paga.</div>";
+            }
+        }
+
+        // Função de cópia com a sua chave real
+        window.copyPix = () => {
+            const chave = "00020126930014br.gov.bcb.pix013652de030e-5125-4ead-9f0a-b17bf7df95380231Cofrinho de Medson Jorge Noleto5204000053039865802BR5919Medson Jorge Noleto6006Palmas61087706432862270523COFRNjM5Nzg0OTAwMDAwMDU6304D70A";
+            navigator.clipboard.writeText(chave);
+            alert("Código Pix copiado!");
+        };
+    </script>
+</body>
+</html>
