@@ -3,19 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Controle de Internet</title>
+    <title>Admin Seguro - Baroleto</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-slate-50 p-4 md:p-10">
+<body class="bg-slate-100 min-h-screen flex flex-col items-center justify-center p-4">
 
-    <div class="max-w-5xl mx-auto">
-        <h1 class="text-2xl font-bold mb-8 text-slate-800 underline decoration-blue-500">Gerenciamento de Clientes</h1>
+    <!-- TELA DE LOGIN (Visível por padrão) -->
+    <div id="login-screen" class="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
+        <div class="text-center mb-6">
+            <i class="fa-solid fa-lock text-3xl text-blue-600 mb-2"></i>
+            <h2 class="text-2xl font-bold text-gray-800">Acesso Restrito</h2>
+            <p class="text-sm text-gray-500">Faça login para gerenciar cobranças</p>
+        </div>
+        <form id="loginForm" class="space-y-4">
+            <input type="email" id="loginEmail" placeholder="E-mail" required class="w-full border p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
+            <input type="password" id="loginPassword" placeholder="Senha" required class="w-full border p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
+            <p id="loginError" class="text-red-500 text-xs hidden">E-mail ou senha incorretos.</p>
+            <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition">ENTRAR</button>
+        </form>
+    </div>
+
+    <!-- PAINEL DE ADMINISTRAÇÃO (Oculto por padrão) -->
+    <div id="admin-screen" class="w-full max-w-5xl hidden w-full mt-4">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-2xl font-bold text-slate-800 underline decoration-blue-500">Painel Baroleto</h1>
+            <button id="btnLogout" class="bg-red-100 text-red-600 px-4 py-2 rounded-lg font-bold hover:bg-red-200 transition">
+                <i class="fa-solid fa-right-from-bracket mr-2"></i>Sair
+            </button>
+        </div>
 
         <!-- Form Cadastro -->
         <div class="bg-white p-6 rounded-2xl shadow-sm border mb-8">
             <form id="addClientForm" class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <input type="text" id="name" placeholder="Nome do Cliente" required class="border p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
+                <input type="text" id="name" placeholder="Nome do Cliente" required class="border p-3 rounded-xl outline-none">
                 <select id="month" class="border p-3 rounded-xl bg-white uppercase text-xs font-bold">
                     <option>Janeiro</option><option>Fevereiro</option><option>Março</option><option>Abril</option>
                     <option>Maio</option><option>Junho</option><option>Julho</option><option>Agosto</option>
@@ -24,7 +45,7 @@
                 <select id="year" class="border p-3 rounded-xl bg-white font-bold">
                     <option>2024</option><option>2025</option>
                 </select>
-                <button type="submit" class="bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition">CADASTRAR</button>
+                <button type="submit" class="bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700">CADASTRAR R$ 50</button>
             </form>
         </div>
 
@@ -47,9 +68,9 @@
     <!-- FIREBASE SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // COLE SUAS CONFIGURAÇÕES DO FIREBASE AQUI
         const firebaseConfig = {
             apiKey: "AIzaSyBGAmDeELLco_wONy9HirW8IdcG4-PcGPE",
             authDomain: "baroleto-cobrancas.firebaseapp.com",
@@ -62,54 +83,94 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+        const auth = getAuth(app);
         const clientsCol = collection(db, "devedores");
 
-        // CADASTRO (Create)
+        let unsubscribeSnapshot = null; // Para parar de ouvir o banco quando deslogar
+
+        // CONTROLE DE TELA (Login vs Dashboard)
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // Usuário Logado: Mostra painel
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('admin-screen').classList.remove('hidden');
+                document.body.classList.remove('justify-center'); // Ajusta layout
+                document.body.classList.add('justify-start');
+                
+                // Carrega os dados do banco
+                loadData();
+            } else {
+                // Usuário Deslogado: Mostra login
+                document.getElementById('login-screen').classList.remove('hidden');
+                document.getElementById('admin-screen').classList.add('hidden');
+                document.body.classList.add('justify-center');
+                document.body.classList.remove('justify-start');
+                
+                if(unsubscribeSnapshot) unsubscribeSnapshot(); // Para de baixar dados
+            }
+        });
+
+        // FUNÇÃO DE LOGIN
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const pass = document.getElementById('loginPassword').value;
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
+                document.getElementById('loginError').classList.add('hidden');
+            } catch (error) {
+                document.getElementById('loginError').classList.remove('hidden');
+            }
+        });
+
+        // FUNÇÃO DE LOGOUT
+        document.getElementById('btnLogout').addEventListener('click', () => {
+            signOut(auth);
+        });
+
+        // CARREGAR DADOS (Apenas quando logado)
+        function loadData() {
+            unsubscribeSnapshot = onSnapshot(clientsCol, (snapshot) => {
+                const tbody = document.getElementById('tableBody');
+                tbody.innerHTML = "";
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const paymentLink = window.location.href.replace('admin.html', 'pagamento.html') + "?id=" + doc.id;
+                    tbody.innerHTML += `
+                        <tr class="border-t hover:bg-slate-50">
+                            <td class="p-4 font-bold text-slate-700">${data.name}</td>
+                            <td class="p-4 text-slate-500 text-sm">${data.month} / ${data.year}</td>
+                            <td class="p-4 text-center">
+                                <button onclick="copyLink('${paymentLink}')" class="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-xs font-bold hover:bg-blue-100"><i class="fa-solid fa-copy"></i> COPIAR</button>
+                            </td>
+                            <td class="p-4 text-right">
+                                <button onclick="deleteClient('${doc.id}')" class="text-red-400 hover:text-red-600"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            });
+        }
+
+        // CADASTRAR CLIENTE
         document.getElementById('addClientForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const name = document.getElementById('name').value;
             const month = document.getElementById('month').value;
             const year = document.getElementById('year').value;
-
             await addDoc(clientsCol, { name, month, year, plan: "1Gb", price: "50.00" });
             e.target.reset();
         });
 
-        // LISTAGEM EM TEMPO REAL (Read)
-        onSnapshot(clientsCol, (snapshot) => {
-            const tbody = document.getElementById('tableBody');
-            tbody.innerHTML = "";
-            snapshot.forEach((doc) => {
-                const data = doc.data();
-                const paymentLink = window.location.href.replace('admin.html', 'pagamento.html') + "?id=" + doc.id;
-                
-                tbody.innerHTML += `
-                    <tr class="border-t hover:bg-slate-50">
-                        <td class="p-4 font-bold text-slate-700">${data.name}</td>
-                        <td class="p-4 text-slate-500 text-sm">${data.month} / ${data.year}</td>
-                        <td class="p-4 text-center text-blue-600 truncate max-w-[200px]">
-                            <button onclick="copyLink('${paymentLink}')" class="bg-blue-50 px-3 py-1 rounded-full text-xs font-bold hover:bg-blue-100">
-                                <i class="fa-solid fa-copy mr-1"></i> COPIAR LINK
-                            </button>
-                        </td>
-                        <td class="p-4 text-right">
-                            <button onclick="deleteClient('${doc.id}')" class="text-red-400 hover:text-red-600"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>
-                `;
-            });
-        });
-
-        // EXCLUSÃO (Delete)
         window.deleteClient = async (id) => {
-            if(confirm("Deseja remover este cliente?")) {
+            if(confirm("Apagar cobrança?")) {
                 await deleteDoc(doc(db, "devedores", id));
             }
         };
 
         window.copyLink = (link) => {
             navigator.clipboard.writeText(link);
-            alert("Link de cobrança copiado!");
+            alert("Link copiado!");
         };
     </script>
 </body>
