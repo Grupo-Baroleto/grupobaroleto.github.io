@@ -195,6 +195,21 @@ function mostrarApp(user) {
   document.getElementById('app').classList.add('flex');
 }
 
+// Decodifica JWT sem verificar assinatura (seguro para exibição)
+function parseJWT(token) {
+  try {
+    const base64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+    return JSON.parse(atob(base64));
+  } catch {
+    return null;
+  }
+}
+
+function tokenExpirado(payload) {
+  if (!payload || !payload.exp) return true;
+  return Date.now() / 1000 > payload.exp;
+}
+
 async function init() {
   const params = new URLSearchParams(window.location.search);
   const token = params.get('token');
@@ -216,19 +231,14 @@ async function init() {
   const tokenSalvo = localStorage.getItem('baroleto_token');
   if (!tokenSalvo) return;
 
-  try {
-    const resp = await fetch(`${BACKEND}/auth/verify`, {
-      headers: { 'Authorization': `Bearer ${tokenSalvo}` }
-    });
-    const data = await resp.json();
-    if (data.valid) {
-      mostrarApp(data.user);
-    } else {
-      localStorage.removeItem('baroleto_token');
-    }
-  } catch {
+  const payload = parseJWT(tokenSalvo);
+
+  if (!payload || tokenExpirado(payload)) {
     localStorage.removeItem('baroleto_token');
+    return;
   }
+
+  mostrarApp(payload);
 }
 
 init();
