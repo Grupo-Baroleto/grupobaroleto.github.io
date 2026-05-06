@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /intranet.html
+Disallow: /net/
 
 Sitemap: https://grupobaroleto.github.io/sitemap.xml
